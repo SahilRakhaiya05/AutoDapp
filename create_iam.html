@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+
+    <title>IAM User Management</title>
+
+    <style>
+        /* Custom CSS specific to this page */
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4285f4;
+        }
+
+        .form-control {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+
+        .form-select {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+
+        .btn {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #4285f4;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            padding: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #357ae8;
+        }
+
+        #content {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+
+        /* Navigation styles */
+        nav {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: left;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #7e7e7e;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center min-h-screen">
+    <nav>
+        <ul>
+            <li><a href="index.html">Return To Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mx-auto max-w-xl mt-8 px-4 py-8 bg-white shadow-md rounded-lg">
+        <h2 class="text-3xl font-bold text-gray-800 uppercase mb-6">IAM User Management</h2>
+        <div class="space-y-4">
+            <input id="name" type="text" placeholder="Enter user's name" class="form-control form-control-lg">
+            <select id="action" class="form-select form-select-lg">
+                <option value="create">Create User</option>
+                <option value="delete">Delete User</option>
+            </select>
+            <button onclick="manage_iam()" class="btn btn-secondary">Submit</button>
+            <div id="content" class="mt-8 p-4 bg-gray-100 rounded-lg"></div>
+        </div>
+    </div>
+
+    <script>
+        function manage_iam() {
+            let name = document.getElementById('name').value;
+            let action = document.getElementById('action').value;
+
+            axios.post('/cgi-bin/AWSfiles/create_iam.py', {
+                name: name,
+                action: action
+            })
+                .then(response => {
+                    document.getElementById("content").innerText = JSON.stringify(response.data, null, 2);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById("content").innerText = "An error occurred while processing your request.";
+                });
+        }
+    </script>
+</body>
+
+</html>

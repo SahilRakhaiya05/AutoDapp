@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Coordinates</title>
+    <link rel="icon" href="data:,">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        /* Additional styles for specific overrides or customizations */
+        /* You can add specific styles here if needed, but ideally, Tailwind classes should be used for most styling */
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="w-full bg-white py-4 shadow-md">
+        <div class="container mx-auto">
+            <ul class="flex justify-start">
+                <li class="mr-6"><a href="index.html" class="text-gray-800 hover:text-gray-600">Return To Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content container -->
+    <div class="container px-4 py-8 mx-auto">
+        <!-- Header -->
+        <header>
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Get Coordinates</h1>
+        </header>
+
+        <!-- Form section -->
+        <form id="coordinatesForm" class="flex flex-col space-y-4">
+            <label for="location" class="text-lg text-gray-800">Enter location:</label>
+            <input type="text" id="location" name="location"
+                class="px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="City Name" required>
+            <div class="flex space-x-4">
+                <button type="submit"
+                    class="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Get
+                    Coordinates</button>
+                <button type="button"
+                    id="getCurrentLocation"
+                    class="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Current
+                    Coordinates</button>
+            </div>
+        </form>
+
+        <hr class="my-8">
+
+        <!-- Result display area -->
+        <div id="result" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-800 max-h-72 overflow-auto"></div>
+    </div>
+
+    <!-- JavaScript for fetching coordinates -->
+    <script>
+        document.getElementById('coordinatesForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var location = document.getElementById('location').value;
+            fetch('/cgi-bin/geo_coordinates.py?location=' + encodeURIComponent(location))
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('getCurrentLocation').addEventListener('click', function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    var coordinates = { latitude: latitude, longitude: longitude };
+                    document.getElementById('result').innerText = JSON.stringify(coordinates, null, 2);
+                }, function (error) {
+                    console.error('Error getting current position:', error.message);
+                    alert('Error getting current position. Please try again or enter a location manually.');
+                });
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
+        });
+    </script>
+</body>
+
+</html>

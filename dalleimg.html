@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Image Generator</title>
+  
+  <!-- External CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Internal CSS -->
+  <style>
+    /* Global styles */
+    body {
+      background-color: #ffffff;
+      color: #cbd5e0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #2d3748;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-container {
+      margin-bottom: 1rem;
+    }
+
+    .input-container label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .input-container input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 4px;
+      border: 1px solid #cbd5e0;
+      background-color: #4a5568;
+      color: #cbd5e0;
+      transition: border-color 0.2s ease;
+    }
+
+    .input-container input[type="text"]::placeholder {
+      color: #a0aec0;
+    }
+
+    .input-container input[type="text"]:focus {
+      outline: none;
+      border-color: #38a169;
+    }
+
+    .box {
+      background-color: #2d3748;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #38a169;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #2f855a;
+    }
+
+   /* nav*/
+
+   nav {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: left;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #7e7e7e;
+        }
+
+    
+  </style>
+</head>
+<body>
+  <body class="bg-gray-100 flex flex-col items-center min-h-screen">
+    <nav>
+        <ul>
+            <li><a href="index.html">Retun To Home</a></li>
+        </ul>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-800 uppercase" style="margin-top: 20px;">Image Generator</h1> 
+  <form action="/cgi-bin/dalleimg.py" method="POST" class="container">
+    <div class="box">
+      <div class="input-container">
+        <label for="cmd">Enter the prompt:</label>
+        <input type="text" id="cmd" name="cmd" placeholder="Enter the desired prompt" required>
+      </div>
+      <input type="submit" value="Generate Image">
+    </div>
+  </form>
+</body>
+</html>

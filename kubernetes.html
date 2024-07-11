@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes Operations</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 30px;
+            height: 30px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        av ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px;
+            display: flex;
+            justify-content: left;
+            margin-top: 20px;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #cbc3c3;
+        }
+
+    </style>
+</head><nav>
+    <ul>
+        <li><a href="index.html">Retun To Home</a></li>
+    </ul>
+</nav>
+
+<body class="bg-gray-900 text-white">
+    <header class="bg-gray-800 text-white text-center py-6 border-b border-gray-700">
+        <h1 class="text-4xl font-bold">Kubernetes Operations</h1>
+    </header>
+    <main class="container mx-auto mt-10 px-4">
+        <!-- List Pod Form -->
+        <section class="bg-gray-800 shadow-lg rounded-lg p-8 mb-6">
+            <h2 class="text-2xl font-semibold mb-6">List Pods</h2>
+            <button onclick="listPods()" class="bg-green-600 text-white p-3 rounded w-40 hover:bg-green-700">List Pods</button>
+            <div id="listPodsOutput" class="border border-gray-600 p-4 rounded mt-4 h-64 overflow-auto bg-gray-900 text-white"></div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Launch Pod Section -->
+          <section class="bg-gray-800 shadow-lg rounded-lg p-8 mb-6">
+              <h2 class="text-2xl font-semibold mb-6">Launch Pod</h2>
+              <input type="text" id="podName" class="border border-gray-600 bg-gray-700 p-3 rounded mb-4 w-full text-green-500 placeholder-gray-500" placeholder="Enter Pod Name">
+              <button onclick="launchPod()" class="bg-green-600 text-white p-3 rounded w-60 hover:bg-green-700">Launch Pod</button>
+              <div id="launchPodOutput" class="border border-gray-600 p-4 rounded mt-4 h-40 overflow-auto bg-gray-900 text-white"></div>
+          </section>
+
+          <!-- Delete Pod Section -->
+          <section class="bg-gray-800 shadow-lg rounded-lg p-8 mb-6">
+              <h2 class="text-2xl font-semibold mb-6">Delete Pod</h2>
+              <input type="text" id="deletePodName" class="border border-gray-600 bg-gray-700 p-3 rounded mb-4 w-full text-green-500 placeholder-gray-500" placeholder="Enter Pod Name">
+              <button onclick="deletePod()" class="bg-red-600 text-white p-3 rounded w-60 hover:bg-red-700">Delete Pod</button>
+              <div id="deletePodOutput" class="border border-gray-600 p-4 rounded mt-4 h-40 overflow-auto bg-gray-900 text-white"></div>
+          </section>
+      </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <section class="bg-gray-800 shadow-lg rounded-lg p-4">
+            <h2 class="text-xl font-semibold mb-4">Scale Replica</h2>
+            <input type="text" id="scaleName" class="border border-gray-600 bg-gray-700 p-2 rounded mb-2 w-full text-green-500 placeholder-gray-500" placeholder="Enter Pod Name">
+            <input type="number" id="scaleReplica" class="border border-gray-600 bg-gray-700 p-2 rounded mb-2 w-full text-green-500 placeholder-gray-500" placeholder="Enter Replica Number">
+            <button onclick="scaleReplica()" class="bg-blue-600 text-white p-2 rounded w-40 hover:bg-blue-700">Scale Replica</button>
+            <div id="scaleReplicaOutput" class="border border-gray-600 p-2 rounded mt-2 h-32 overflow-auto bg-gray-900 text-white"></div>
+        </section>
+
+        <!-- Describe Pod Section -->
+        <section class="bg-gray-800 shadow-lg rounded-lg p-4 mb-.5">
+            <h2 class="text-xl font-semibold mb-4">Describe Pod</h2>
+            <input type="text" id="describePodName" class="border border-gray-600 bg-gray-700 p-2 rounded mb-2 w-full text-green-500 placeholder-gray-500" placeholder="Enter Pod Name">
+            <button onclick="describePod()" class="bg-blue-600 text-white p-2 rounded w-40 hover:bg-blue-700">Describe Pod</button>
+            <div id="describePodOutput" class="border border-gray-600 p-2 rounded mt-2 h-32 overflow-auto bg-gray-900 text-white"></div>
+        </section>
+
+        <!-- Get Pod Logs Section -->
+        <section class="bg-gray-800 shadow-lg rounded-lg p-4 mb-.5">
+            <h2 class="text-xl font-semibold mb-4">Get Pod Logs</h2>
+            <input type="text" id="logsPodName" class="border border-gray-600 bg-gray-700 p-2 rounded mb-2 w-full text-green-500 placeholder-gray-500" placeholder="Enter Pod Name">
+            <button onclick="getLogs()" class="bg-blue-600 text-white p-2 rounded w-40 hover:bg-blue-700">Get Logs</button>
+            <div id="logsOutput" class="border border-gray-600 p-2 rounded mt-2 h-32 overflow-auto bg-gray-900 text-white"></div>
+        </section>
+    </div>
+       
+    
+
+    <script>
+        function showLoader() {
+            document.getElementById("loading").style.display = "block";
+        }
+
+        function hideLoader() {
+            document.getElementById("loading").style.display = "none";
+        }
+
+        function listPods() {
+            showLoader();
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "/cgi-bin/listPods", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    hideLoader();
+                    if (xhr.status === 200) {
+                        document.getElementById("listPodsOutput").innerHTML = xhr.responseText;
+                    } else {
+                        document.getElementById("listPodsOutput").innerHTML = "Error fetching pods.";
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        function launchPod() {
+            const podName = document.getElementById("podName").value.trim();
+            if (!podName) {
+                alert("Please enter a pod name.");
+                return;
+            }
+            showLoader();
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `/cgi-bin/launchPod?name=${podName}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    hideLoader();
+                    if (xhr.status === 200) {
+                        document.getElementById("launchPodOutput").innerHTML = xhr.responseText;
+                    } else {
+                        document.getElementById("launchPodOutput").innerHTML = "Error launching pod.";
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        function deletePod() {
+            const podName = document.getElementById("deletePodName").value.trim();
+            if (!podName) {
+                alert("Please enter a pod name.");
+                return;
+            }
+            showLoader();
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `/cgi-bin/deletePod?name=${podName}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    hideLoader();
+                    if (xhr.status === 200) {
+                        document.getElementById("deletePodOutput").innerHTML = xhr.responseText;
+                    } else {
+                        document.getElementById("deletePodOutput").innerHTML = "Error deleting pod.";
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        function scaleReplica() {
+            const podName = document.getElementById("scaleName").value.trim();
+            const replicaCount = document.getElementById("scaleReplica").value.trim();
+            if (!podName || !replicaCount || isNaN(replicaCount)) {
+                alert("Please enter valid inputs.");
+                return;
+            }
+            showLoader();
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `/cgi-bin/scaleReplica?name=${podName}&replica=${replicaCount}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    hideLoader();
+                    if (xhr.status === 200) {
+                        document.getElementById("scaleReplicaOutput").innerHTML = xhr.responseText;
+                    } else {
+                        document.getElementById("scaleReplicaOutput").innerHTML = "Error scaling replica.";
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        function describePod() {
+            const podName = document.getElementById("describePodName").value.trim();
+            if (!podName) {
+                alert("Please enter a pod name.");
+                return;
+            }
+            showLoader();
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `/cgi-bin/describePod?name=${podName}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    hideLoader();
+                    if (xhr.status === 200) {
+                        document.getElementById("describePodOutput").innerHTML = xhr.responseText;
+                    } else {
+                        document.getElementById("describePodOutput").innerHTML = "Error describing pod.";
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        function getLogs() {
+            const podName = document.getElementById("logsPodName").value.trim();
+            if (!podName) {
+                alert("Please enter a pod name.");
+                return;
+            }
+            showLoader();
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `/cgi-bin/getLogs?name=${podName}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    hideLoader();
+                    if (xhr.status === 200) {
+                        document.getElementById("logsOutput").innerHTML = xhr.responseText;
+                    } else {
+                        document.getElementById("logsOutput").innerHTML = "Error fetching logs.";
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>

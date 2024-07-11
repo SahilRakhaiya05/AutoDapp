@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoDapp</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+         .display-4 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #000000; /* Adjust the color as needed */
+           
+        }
+        .capitalize {
+            text-transform: capitalize;
+        }
+    </style>
+
+    
+</head>
+
+<body>
+    
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            <img src="assets/img/logo.png" alt="Logo">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="index.html" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="#aws-section">AWS</a></li>
+                            <li class="scroll-to-section"><a href="docker.html">Docker</a></li>
+                            <li class="scroll-to-section"><a href="kubernetes.html">Kubernetes</a></li>
+                        </ul>
+                        <!-- ***** Menu End ***** -->       
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+
+    <section class="hero-section mt-2" >
+        <div class="container">
+            <div class="hero-container">
+                <div class="image-wrapper">
+                    <img src="assets/img/banner.png" alt="Service Image">
+                </div>
+                <div class="hero-content">
+                    <h1 class="display-4"><span class="capitalize">A</span>uto<span class="capitalize">D</span>app</h1>
+                    <p class="lead"><b>AutoDapp</b> is an innovative service provider that leverages the power of AWS, Docker, Kubernetes etc... to deliver scalable and robust applications.</p>
+                    <a href="#get-started">
+                        <button class="get-started-btn">
+                            Get Started <i class="fas fa-play"></i>
+                        </button>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    
+    <section class="mt-5">
+        <div class="container-2">
+            <h2 class="text-center" id="get-started"><b>SERVICES</b></h2>
+            <div id="services" class="d-flex justify-content-center flex-wrap">
+                <!-- AWS Service Item -->
+                <a href="send_bulk_email.html" class="service aws">
+                    <img src="assets/img/email.png" alt="AWS">
+                    <div class="mt-4">Send Bulk Email</div>
+                </a>
+
+                <!-- DOCKER Service Item -->
+                <a href="whatsapp.html" class="service docker">
+                    <img src="assets/img/whatsapp.png" alt="DOCKER">
+                    <div class="mt-4">Whatsapp</div>
+                </a>
+
+                <!-- Additional Service Items (Add more as needed) -->
+                <a href="html_live_interpreter.html" class="service azure">
+                    <img src="assets/img/html.png" alt="Azure">
+                    <div class="mt-4">Live HTML Editor</div>
+                </a>
+
+                <a href="geo_coordinates.html" class="service gcp">
+                    <img src="assets/img/geo.png" alt="GCP">
+                    <div class="mt-4">Geo Coordinates</div>
+                </a>
+
+                <a href="terminal.html" class="service kubernetes">
+                    <img src="assets/img/terminal.png" alt="Kubernetes">
+                    <div class="mt-4">Online Terminal</div>
+                </a>
+
+                <a href="text_to_speak.html" class="service k">
+                    <img src="assets/img/tts.png" alt="Kubernetes">
+                    <div class="mt-4">Text To Speak</div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <br>
+    <hr>
+    <br>
+    
+    
+    
+    <section class="py-4" id="aws-section">
+        <div class="container-4">
+            <h2 class="text-center"><b>AWS</b></h2>
+        </div>
+        <div class="col-md-8 offset-md-2">
+            <p class="text-center mb-5">Amazon Web Services (AWS) is a comprehensive and evolving cloud computing platform provided by Amazon. It offers a wide range of services including computing power, storage options, database management, machine learning, developer tools, IoT, security, and much more.
+            </p>
+        </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                        <div class="image-container">
+                            <img src="assets/img/ec2.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>
+                        <div class="card-body">
+                            <h5>EC2</h5>
+                            <p>Manage your EC2 instances efficiently.</p>
+                            <a href="aws instance.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+    
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                        <div class="image-container">
+                            <img src="assets/img/cloudwatch.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>                        
+                        <div class="card-body">
+                            <h5>Cloudwatch Logs</h5>
+                            <p>Monitor your logs seamlessly.</p>
+                            <a href="cloudwatch_logs.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                        <div class="image-container">
+                            <img src="assets/img/iam.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>                          
+                        <div class="card-body">
+                            <h5>Create Iam</h5>
+                            <p>Easily create IAM roles and policies.</p>
+                            <a href="create_iam.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                        <div class="image-container">
+                            <img src="assets/img/matix.png" alt="EC2 Manager 1" class="img-fluid" style="margin-top: 20px;">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Ec2 Metrics</h5>
+                            <p>Track and analyze your EC2 metrics.</p>
+                            <a href="ec2metrics.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                        <div class="image-container">
+                            <img src="assets/img/logs.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Get_Logs</h5>
+                            <p>Retrieve logs quickly and effectively.</p>
+                            <a href="get_logs.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                        <div class="image-container">
+                            <img src="assets/img/sns.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>sns</h5>
+                            <p>Manage your SNS topics and subscriptions.</p>
+                            <a href="sns.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" style="align-items: center;">
+                    <div class="ec2-manager-card">
+                        <div class="image-container">
+                            <img src="assets/img/awslist.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>                        
+                        <div class="card-body">
+                            <h5>AWS list Task</h5>
+                            <p>ALl in one place for AWS services.</p>
+                            <a href="AWS-taskList.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        </div>
+    </section>
+    <hr>
+
+    <section class="py-4" style="margin-bottom: 5px;">
+        <div class="container-4">
+            <h2 class="text-center" style="margin-bottom: 30px;"><b>More Services</b></h2><hr>
+        </div>
+        
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/docker.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Docker Manager</h5>
+                            <p>Manage your Docker containers effortlessly.</p>
+                            <a href="docker.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/Kubernetes.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Kubernetes Manager</h5>
+                            <p>Oversee your Kubernetes clusters with ease.</p>
+                            <a href="kubernetes.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/terminal.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Live Terminal</h5>
+                            <p>Access a live terminal for quick commands.</p>
+                            <a href="terminal.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/cmdfinder.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>CMD Finder</h5>
+                            <p>Find and execute commands swiftly.</p>
+                            <a href="cmdlist.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/whatsapp.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Send Whatsapp</h5>
+                            <p>Send Whatsapp messages in bulk.</p>
+                            <a href="whatsapp.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/tts.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Text To Speak</h5>
+                            <p>Convert text to speech conveniently.</p>
+                            <a href="text_to_speak.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/email.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Send Bulk Email</h5>
+                            <p>Dispatch bulk emails efficiently.</p>
+                            <a href="send_bulk_email.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/google1.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Google Search</h5>
+                            <p>Perform Google searches directly.</p>
+                            <a href="google.search.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/html.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>HTML Live Editor</h5>
+                            <p>Edit HTML live in your browser.</p>
+                            <a href="html_live_interpreter.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/geo.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Geo Coordinates</h5>
+                            <p>Obtain geo coordinates with ease.</p>
+                            <a href="geo_coordinates.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/dalle.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Image Generator</h5>
+                            <p>Generate Image using openai dalle2.</p>
+                            <a href="dalleimg.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ec2-manager-card">
+                       <div class="image-container">
+                            <img src="assets/img/gemini.png" alt="EC2 Manager 1" class="img-fluid">
+                        </div>  
+                        <div class="card-body">
+                            <h5>Chat With Gemini</h5>
+                            <p>Gemini is the AI-powered assistant from Google.</p>
+                            <a href="gemini.html" class="get-started-btn">
+                                Open Service <i class="fas fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+              
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+        </div>
+    </section>
+    <hr>
+    <footer class="bg-white">
+        
+    
+        <!-- Copyrights -->
+        <div class="bg-light py-4">
+          <div class="container text-center">
+            <pre class="text-muted mb-0 py-2">
+© 2024 Devloped By Sahil Rakhaiya 
+   All rights reserved.</pre>
+          </div>
+        </div>
+      </footer>
+
+
+    <!-- Bootstrap and other JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Vibrant.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vibrant.js/1.0.0/Vibrant.min.js"
+        integrity="sha512-V6rhYmJy8NZQF8F0bhJiTM0iI6wX/FKJoWvYrCM15UIeb6p38HjvTZWfO0IxJnMZrHWUJZJqLuWK0zslra2FVw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+
+</body>
+
+</html>

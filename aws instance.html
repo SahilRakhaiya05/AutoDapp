@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Launch AWS Instance</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for this specific page */
+        body {
+            background: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #4285f4;
+        }
+
+        label {
+            font-weight: bold;
+            color: #666;
+        }
+
+        .form-control {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+
+        .btn {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #4285f4;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            padding: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #357ae8;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+
+        /* Navigation styles */
+        nav {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: left;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #7e7e7e;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center min-h-screen">
+    <nav>
+        <ul>
+            <li><a href="index.html">Return To Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mx-auto max-w-xl mt-8 px-4 py-8 bg-white shadow-md rounded-lg">
+        <h1 class="text-3xl font-bold text-gray-800 uppercase text-center mb-8">Launch AWS Instance</h1>
+        <form id="launch-form" action="/cgi-bin/launch_instance.py" method="post" class="grid grid-cols-1 gap-y-4">
+            <label for="instanceType" class="block text-gray-700">Instance Type:</label>
+            <input type="text" id="instanceType" name="instanceType" class="form-control" placeholder="Enter Instance Type" required>
+
+            <label for="imageId" class="block text-gray-700">Image ID:</label>
+            <input type="text" id="imageId" name="imageId" class="form-control" placeholder="Enter Image ID" required>
+
+            <label for="regionName" class="block text-gray-700">Region Name:</label>
+            <input type="text" id="regionName" name="regionName" class="form-control" placeholder="Enter Region Name" required>
+
+            <button type="submit" class="btn btn-primary">Launch</button>
+        </form>
+
+        <div id="result" class="mt-8 p-4 bg-gray-100 rounded-lg"></div>
+    </div>
+
+    <script>
+        document.getElementById('launch-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var params = new URLSearchParams(formData);
+
+            fetch('/cgi-bin/AWSfiles/launch_instance.py', {
+                method: 'POST',
+                body: params
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- External libraries -->
+    <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+
+    <title>SNS (Simple Notification Service)</title>
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen p-4">
+    <nav class="bg-gray-800 py-4 shadow-md">
+        <ul class="flex justify-start ml-8">
+            <li><a href="index.html" class="text-white hover:text-gray-600">Return To Home</a></li>
+        </ul>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-850 uppercase mt-8 mb-4 text-center">SNS (Simple Notification Service)</h1>
+
+    <div class="container mx-auto mt-5">
+        <div class="grid gap-4">
+            <input class="form-input form-input-lg bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500 text-gray-300"
+                id="topicname" type="text" placeholder="Enter Topic Name">
+            <button onclick="createTopic()"
+                class="btn btn-primary bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold transition transform hover:scale-105">
+                SNS Create Topic
+            </button>
+            <div id="content" class="mt-4"></div>
+        </div>
+    </div>
+
+    <script>
+        function createTopic() {
+            var topicname = document.getElementById('topicname').value;
+            axios.get('/cgi-bin/AWSfiles/sns.py', {
+                    params: {
+                        name: topicname
+                    }
+                })
+                .then(function (response) {
+                    document.getElementById("content").innerHTML = response.data;
+                })
+                .catch(function (error) {
+                    document.getElementById("content").innerHTML = "Some error occurred";
+                });
+        }
+    </script>
+</body>
+
+</html>

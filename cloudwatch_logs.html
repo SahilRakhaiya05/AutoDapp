@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display CloudWatch Logs</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS (if any) */
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <nav class="w-full bg-white py-4 shadow">
+        <div class="container mx-auto">
+            <ul class="flex justify-left">
+                <li class="mx-4">
+                    <a href="index.html" class="text-gray-800 hover:text-gray-600">Return To Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container max-w-4xl mx-auto mt-8 px-4">
+        <h1 class="text-3xl font-bold text-gray-800 uppercase text-center">CloudWatch Logs</h1>
+
+        <div id="logs" class="max-h-96 overflow-y-auto border border-gray-300 rounded-md mt-4 p-4 bg-white">
+            <!-- Logs will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchLogs(); // Fetch logs when page loads
+
+            function fetchLogs() {
+                var logGroup = '/aws/lambda/lamdafun1';  // Replace with your log group name
+                var logStream = '2024/05/27/[$LATEST]a9cb10a289884d55a33391431d7fa6cd';  // Replace with your log stream name
+                var region = 'ap-south-1';  // Replace with your AWS region
+
+                var url = '/cgi-bin/cloudwatch_logs.py';
+                var params = `?log_group_name=${logGroup}&log_stream_name=${logStream}&region_name=${region}`;
+
+                fetch(url + params)
+                    .then(response => response.json())
+                    .then(data => {
+                        displayLogs(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching logs:', error);
+                    });
+            }
+
+            function displayLogs(logs) {
+                var logsContainer = document.getElementById('logs');
+                logsContainer.innerHTML = '';
+
+                logs.forEach(log => {
+                    var logEntry = document.createElement('div');
+                    logEntry.classList.add('log-entry');
+
+                    var timestamp = new Date(log.timestamp);
+                    var timestampStr = timestamp.toLocaleString();
+
+                    var timestampElem = document.createElement('div');
+                    timestampElem.classList.add('timestamp');
+                    timestampElem.textContent = timestampStr;
+
+                    var messageElem = document.createElement('div');
+                    messageElem.classList.add('message');
+                    messageElem.textContent = log.message;
+
+                    logEntry.appendChild(timestampElem);
+                    logEntry.appendChild(messageElem);
+
+                    logsContainer.appendChild(logEntry);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

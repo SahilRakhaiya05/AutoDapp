@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Get Logs</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS specific to this page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h1 {
+            color: #4299e1; /* Blue header color */
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #4a5568; /* Gray border */
+            border-radius: 5px;
+            background-color: #2d3748; /* Darker background for inputs */
+            color: #cbd5e0; /* Light text color */
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4299e1; /* Blue border color on focus */
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #4299e1; /* Blue button color */
+            color: #fff; /* White text color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #3182ce; /* Darker blue on hover */
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #2d3748; /* Darker background for result */
+            color: #cbd5e0; /* Light text color */
+            font-size: 14px;
+            white-space: pre-wrap; /* Preserve whitespace and wrap text */
+        }
+
+        /* Navigation styles */
+        nav {
+            width: 100%;
+            background-color: #2d3748;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: left;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #7e7e7e;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen p-4">
+    <nav>
+        <ul>
+            <li><a href="index.html">Return To Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="flex flex-col items-center justify-center" style="margin-top: 20px;">
+        <h1 class="text-4xl font-bold mb-8 text-blue-500">Get Logs</h1>
+        <form action="/cgi-bin/AWSfiles/get_logs.py" method="post"
+            class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-lg space-y-6">
+
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label for="logGroupName" class="block text-sm font-medium mb-2">Log Group Name:</label>
+                    <input type="text" id="logGroupName" name="logGroupName" placeholder="Enter Log Group Name"
+                        class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label for="logStreamName" class="block text-sm font-medium mb-2">Log Stream Name:</label>
+                    <input type="text" id="logStreamName" name="logStreamName" placeholder="Enter Log Stream Name"
+                        class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+                </div>
+            </div>
+
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label for="awsAccessKey" class="block text-sm font-medium mb-2">AWS Access Key:</label>
+                    <input type="text" id="awsAccessKey" name="awsAccessKey" placeholder="Enter AWS Access Key"
+                        class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label for="awsSecretKey" class="block text-sm font-medium mb-2">AWS Secret Key:</label>
+                    <input type="text" id="awsSecretKey" name="awsSecretKey" placeholder="Enter AWS Secret Key"
+                        class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+                </div>
+            </div>
+
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-3">
+                    <label for="regionName" class="block text-sm font-medium mb-2">Region Name:</label>
+                    <input type="text" id="regionName" name="regionName" placeholder="Enter Region Name"
+                        class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded font-semibold transition transform hover:scale-105">Get
+                    Logs</button>
+            </div>
+        </form>
+
+        <div id="result" class="mt-6 p-4 bg-gray-800 rounded-lg w-full max-w-lg text-gray-300"></div>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var params = new URLSearchParams(formData);
+
+            fetch('/cgi-bin/AWSfiles/get_logs.py', {
+                    method: 'POST',
+                    body: params
+                })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('result').innerText = data;
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+
+</html>

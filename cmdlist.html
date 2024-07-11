@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Suggestions</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+
+         /* nav*/
+
+         nav {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: left;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #7e7e7e;
+        }
+
+        /* Custom CSS */
+        body {
+            font-family: 'Inter', sans-serif; /* Use Inter font if available */
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 2rem;
+            text-align: center;
+        }
+        #commandInput {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        #commandInput:focus {
+            outline: none;
+            border-color: #4c51bf;
+            box-shadow: 0 0 0 2px rgba(76, 81, 191, 0.3);
+        }
+        #suggestionList {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            animation: fadeIn 0.3s ease;
+        }
+        #suggestionList li {
+            padding: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #suggestionList li:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            #commandInput {
+                font-size: 1rem;
+            }
+            #suggestionList {
+                max-height: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <body class="bg-gray-100 flex flex-col items-center min-h-screen">
+        <nav>
+            <ul>
+                <li><a href="index.html">Retun To Home</a></li>
+            </ul>
+        </nav>
+    
+        <h1 class="text-3xl font-bold text-gray-800 uppercase" style="margin-top: 40px;">Command List</h1> 
+    <div class="container">
+        
+        <input type="text" id="commandInput" placeholder="Type a command..." class="px-4 py-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:border-blue-500">
+        <ul id="suggestionList" class="space-y-1"></ul>
+    </div>
+
+    <script>
+        const input = document.getElementById('commandInput');
+        const suggestionList = document.getElementById('suggestionList');
+
+        input.addEventListener('input', () => {
+            const query = input.value.trim();
+            if (query.length === 0) {
+                suggestionList.innerHTML = '';
+                return;
+            }
+            fetch(`/cgi-bin/cmdlist.py?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    suggestionList.innerHTML = '';
+                    data.forEach(suggestion => {
+                        const li = document.createElement('li');
+                        li.textContent = suggestion;
+                        suggestionList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error fetching suggestions:', error));
+        });
+    </script>
+</body>
+</html>

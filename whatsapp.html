@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send WhatsApp Message</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* You can remove the previous custom styles since we'll use Tailwind CSS utility classes */
+        /* Any additional custom styles can be added within <style> tags here */
+        /* This space intentionally left blank */
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center min-h-screen">
+
+    <nav class="w-full bg-white py-2 shadow">
+        <ul class="flex justify-start">
+            <li class="mx-4"><a href="index.html">Return To Home</a></li>
+        </ul>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-800 uppercase mt-8 mb-4">WhatsApp Message</h1>
+
+    <div class="container mx-auto bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
+        <form id="whatsappForm">
+            <div class="mb-4">
+                <label for="recipient_number" class="text-green-600 font-bold block">To:</label>
+                <input type="text" class="form-input mt-1 block w-full border rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50" id="recipient_number" name="recipient_number" placeholder="Enter recipient number" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="message_body" class="text-green-600 font-bold block">Message:</label>
+                <textarea class="form-textarea mt-1 block w-full border rounded-md shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50" id="message_body" name="message_body" rows="4" placeholder="Type your message here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300">Send</button>
+        </form>
+
+        <div id="result" class="mt-4 p-4 bg-gray-200 rounded-md"></div>
+    </div>
+
+    <!-- Bootstrap JS (if needed for certain components) -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
+    <!-- Custom JavaScript -->
+    <script>
+        document.getElementById('whatsappForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            var queryString = new URLSearchParams(formData).toString();
+            fetch('/cgi-bin/whatsapp.py?' + queryString)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+</body>
+
+</html>

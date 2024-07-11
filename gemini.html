@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f0f0; /* Light gray background */
+            margin: 0;
+            display: flex;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff; /* White background for container */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #333333; /* Dark gray for heading */
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 1px solid #cccccc; /* Light border */
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #00cc99; /* Green button */
+            color: #ffffff; /* White text */
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00b386; /* Darker green on hover */
+        }
+
+        #responseContainer {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #cccccc; /* Light border around response */
+            text-align: left;
+            font-size: 16px;
+            color: #333333; /* Dark gray text */
+            background: #f9f9f9; /* Light gray background for response */
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        /* Scrollbar styles */
+        #responseContainer::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #responseContainer::-webkit-scrollbar-thumb {
+            background-color: #00cc99; /* Green scrollbar thumb */
+            border-radius: 10px;
+        }
+
+        #responseContainer::-webkit-scrollbar-track {
+            background: #f0f0f0; /* Light gray scrollbar track */
+        }
+
+
+
+
+        
+   
+      
+        /* nav*/
+
+        nav {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: left;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #7e7e7e;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <body class="bg-gray-100 flex flex-col items-center min-h-screen">
+        <nav>
+            <ul>
+                <li><a href="index.html">Retun To Home</a></li>
+            </ul>
+        </nav>
+    
+    <div class="container" style="margin-top: 30px;">
+        <h1 >Gemini GPT</h1>
+        <textarea id="prompt" placeholder="Enter your prompt here..."></textarea>
+        <button id="generateButton">Generate</button>
+        <div id="responseContainer"></div>
+    </div>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', function() {
+            var prompt = document.getElementById('prompt').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/cgi-bin/gemini.py', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('responseContainer').innerHTML = xhr.responseText;
+                }
+            };
+
+            xhr.send('prompt=' + encodeURIComponent(prompt));
+        });
+    </script>
+</body>
+</html>

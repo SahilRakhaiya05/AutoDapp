@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sender</title>
+    <link rel="icon" href="data:,">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for Email Sender */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: left;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #7e7e7e;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2.5rem; /* Adjust font size */
+            font-weight: bold; /* Make font bold */
+            text-transform: uppercase; /* Transform text to uppercase */
+        }
+
+        form {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px; /* Added margin-top */
+        }
+
+        label {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: left;
+            width: 100%;
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            transition: border-color 0.3s ease;
+            resize: none;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+
+        textarea {
+            height: 150px;
+            min-height: 150px;
+        }
+
+        input[type="submit"] {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #357ae8;
+        }
+
+        .alert {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center min-h-screen">
+    <nav>
+        <ul>
+            <li><a href="index.html">Return To Home</a></li>
+        </ul>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-800 uppercase mt-8">Email Sender</h1> <!-- Updated title with custom styles -->
+
+    <form id="emailForm" class="bg-white shadow-md rounded-lg p-6 w-full max-w-lg mt-8">
+        <label for="subject" class="block text-gray-700 font-semibold mb-2">Subject:</label>
+        <input type="text" id="subject" name="subject" placeholder="Enter email subject" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 transition duration-300">
+
+        <label for="body" class="block text-gray-700 font-semibold mb-2">Body:</label>
+        <textarea id="body" name="body" rows="4" placeholder="Enter email body" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 transition duration-300"></textarea>
+
+        <label for="recipients" class="block text-gray-700 font-semibold mb-2">Recipients (comma-separated):</label>
+        <input type="text" id="recipients" name="recipients"
+            placeholder="e.g., email1@example.com, email2@example.com" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 transition duration-300">
+
+        <input type="submit" value="Send Emails"
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300">
+    </form>
+
+    <div id="alertBox" class="alert mt-4"></div>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form from submitting the traditional way
+
+            const formData = new FormData(this);
+
+            fetch('/cgi-bin/send_bulk_email.py', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const alertBox = document.getElementById('alertBox');
+                    if (data.results) {
+                        const results = data.results;
+                        results.forEach(result => {
+                            if (result.status === "success") {
+                                alertBox.className = 'alert alert-success';
+                                alertBox.innerText = `Email sent successfully to ${result.recipient}`;
+                            } else {
+                                alertBox.className = 'alert alert-danger';
+                                alertBox.innerText = `Failed to send email to ${result.recipient}. Error: ${result.error}`;
+                            }
+                        });
+                    } else {
+                        alertBox.className = 'alert alert-danger';
+                        alertBox.innerText = 'Failed to send emails: Unknown error';
+                    }
+                    alertBox.style.display = 'block'; // Show the alert box
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.className = 'alert alert-danger';
+                    alertBox.innerText = 'An error occurred while sending emails.';
+                    alertBox.style.display = 'block'; // Show the alert box
+                });
+        });
+    </script>
+
+</body>
+
+</html>

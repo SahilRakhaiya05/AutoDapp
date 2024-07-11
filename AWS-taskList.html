@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Operations</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Additional custom styles */
+        nav {
+            
+            width: 100%;
+            padding: 10px 0;
+            background-color: #ffffff; /* Dark background color */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-start; /* Align items to the right */
+        }
+    
+        nav ul li {
+            margin: 0 15px;
+        }
+    
+        nav ul li a {
+            color: #000000; /* White text color */
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+    
+        nav ul li a:hover {
+            color: #d0d0d0; /* Lighter color on hover */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col items-center  py-8 px-4 sm:px-6 lg:px-8">
+    <!-- Navigation bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html" class="block px-4 py-2">Return To Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="max-w-md w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="margin-top: 50px;">
+        <h1 class="text-3xl font-bold text-center mb-8">AWS Operations</h1>
+
+        <form id="awsForm" action="/cgi-bin/aws_operations.py" method="post">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="operation">Select operation:</label>
+                <select name="operation" id="operation"
+                    class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="launch_ec2_instance">Launch EC2 instance</option>
+                    <option value="launch_rhel_gui_instance">Launch RHEL GUI instance in cloud</option>
+                    <option value="access_cloud_logs">Access logs from the cloud</option>
+                    <option value="audio_to_text_event">Event-driven architecture (Audio to Text)</option>
+                    <option value="connect_python_to_mongodb">Connect Python to MongoDB service on AWS using Lambda
+                    </option>
+                    <option value="upload_to_s3">Upload object to S3</option>
+                    <option value="integrate_lambda_s3_ses">Integrate Lambda with S3 and SES</option>
+                </select>
+            </div>
+
+            <div id="operationFields" class="mb-6">
+                <!-- Dynamic fields will be inserted here -->
+            </div>
+
+            <div class="flex items-center justify-center">
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Execute Operation
+                </button>
+            </div>
+        </form>
+
+        <div id="result" class="max-w-md mx-auto mt-4"></div>
+    </div>
+
+    <script>
+        document.getElementById('operation').addEventListener('change', function () {
+            const selectedOperation = this.value;
+            let operationFields = '';
+
+            if (selectedOperation === 'access_cloud_logs') {
+                operationFields = `
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Log Group Name: <input type="text" name="log_group_name" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></label><br>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Log Stream Name: <input type="text" name="log_stream_name" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></label><br>
+                `;
+            } else if (selectedOperation === 'audio_to_text_event') {
+                operationFields = `
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Bucket Name: <input type="text" name="bucket_name" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></label><br>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Audio File Name: <input type="text" name="audio_file_name" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></label><br>
+                `;
+            } else if (selectedOperation === 'upload_to_s3' || selectedOperation === 'integrate_lambda_s3_ses') {
+                operationFields = `
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Bucket Name: <input type="text" name="bucket_name" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></label><br>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">File Name: <input type="text" name="file_name" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></label><br>
+                `;
+            }
+
+            document.getElementById('operationFields').innerHTML = operationFields;
+        });
+
+        document.getElementById('awsForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const params = new URLSearchParams(formData).toString();
+
+            fetch(`/cgi-bin/aws_operations.py?${params}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                });
+        });
+    </script>
+</body>
+
+</html>
