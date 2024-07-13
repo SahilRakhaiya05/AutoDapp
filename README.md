@@ -1,6 +1,6 @@
 # 🚀 AutoDapp: Simplifying Linux User Experience
 
-AutoDapp is an innovative software development initiative aimed at enhancing the user experience on Linux-based operating systems. By creating a user-friendly, feature-rich menu interface, the project strives to simplify various tasks, boost productivity, and provide a unified environment for users.
+AutoDapp is an innovative software development initiative aimed at enhancing the user experience. By creating a user-friendly, feature-rich menu interface, the project strives to simplify various tasks, boost productivity, and provide a unified environment for users.
 
 ## Project Objectives
 
